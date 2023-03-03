@@ -1,12 +1,21 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import styles from "./index.module.css";
 
 const id = btoa(Math.random().toString()).substring(10, 15);
 
 export default function Home() {
-  const [animalInput, setAnimalInput] = useState("");
-  const [result, setResult] = useState();
+  const messagesEndRef = useRef(null);
+  const [messageInput, setMessageInput] = useState("");
+  const [result, setResult] = useState([]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [result]);
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -16,7 +25,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id, content: animalInput }),
+        body: JSON.stringify({ id, content: messageInput }),
       });
 
       const data = await response.json();
@@ -27,8 +36,12 @@ export default function Home() {
         );
       }
 
-      setResult(data.result);
-      setAnimalInput("");
+      setResult([
+        ...result,
+        { role: "user", content: messageInput },
+        { role: "assistant", content: data.result },
+      ]);
+      setMessageInput("");
     } catch (error) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -38,6 +51,12 @@ export default function Home() {
 
   return (
     <div>
+      <style jsx global>{`
+        body {
+          margin: 0;
+        }
+      `}</style>
+
       <Head>
         <title>Her by OpenAI</title>
         <link rel="icon" href="/her.png" />
@@ -45,18 +64,31 @@ export default function Home() {
 
       <main className={styles.main}>
         {/* <img src="/dog.png" className={styles.icon} /> */}
-        <h3>Her</h3>
+        <div className={styles.header}>Her</div>
+
+        <div className={styles.result}>
+          {result.map((message, index) => {
+            return (
+              <div
+                key={index}
+                className={styles[message.role]}
+                dangerouslySetInnerHTML={{ __html: message.content }}
+              />
+            );
+          })}
+          <div ref={messagesEndRef} />
+        </div>
+
         <form onSubmit={onSubmit}>
           <input
             type="text"
             name="message"
             placeholder="Type your message here"
-            value={animalInput}
-            onChange={(e) => setAnimalInput(e.target.value)}
+            value={messageInput}
+            onChange={(e) => setMessageInput(e.target.value)}
           />
           <input type="submit" value="Send" />
         </form>
-        <div className={styles.result}>{result}</div>
       </main>
     </div>
   );

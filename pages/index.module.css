@@ -19,37 +19,46 @@
   line-height: 24px;
   color: #353740;
   /* font-family: "ColfaxAI", Helvetica, sans-serif; */
-  font-family: "Helvetica", "Arial", sans-serif;
+  font-family: Söhne, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+    Ubuntu, Cantarell, Noto Sans, sans-serif, Helvetica Neue, Arial,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
 }
 .main {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding-top: 60px;
-  max-width: 640px;
+  align-items: stretch;
   margin: 0 auto;
+  position: relative;
+  height: 100vh;
 }
 .main .icon {
   width: 34px;
 }
-.main h3 {
+.main .header {
+  position: absolute;
+  top: 0;
   font-size: 32px;
   line-height: 60px;
-  font-weight: bold;
   color: #ca1343;
-  margin: 16px 0 40px;
+  width: 100px;
+  text-align: center;
+  background: rgb(255 255 255 / 50%);
+  backdrop-filter: blur(4px);
+  left: calc(50% - 50px);
 }
 .main form {
   display: flex;
-  flex-direction: column;
-  width: 320px;
+  flex-direction: row;
+  width: 100%;
+  position: absolute;
+  bottom: 4px;
 }
 .main input[type="text"] {
   padding: 12px 16px;
   border: 1px solid #ca1343;
   border-radius: 4px;
-  margin-bottom: 24px;
   outline-color: #ca1343;
+  flex-grow: 1;
 }
 .main ::placeholder {
   color: #8e8ea0;
@@ -63,8 +72,23 @@
   border-radius: 4px;
   text-align: center;
   cursor: pointer;
+  width: 50px;
+  height: 50px;
 }
 .main .result {
-  font-weight: bold;
-  margin-top: 40px;
+  font-weight: normal;
+  white-space: pre-line;
+  overflow: scroll;
+  height: 100%;
+  padding: 60px 0;
+}
+.main .result .user {
+  background-color: #fff;
+  padding: 10px 20px;
+  margin: 10px 0;
+}
+.main .result .assistant {
+  background-color: #c9144522;
+  padding: 10px 20px;
+  margin: 10px 0;
 }
