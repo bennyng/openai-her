@@ -40,36 +40,6 @@ export default function Home() {
         ...result,
         { role: "user", content: messageInput },
         { role: "assistant", content: data.result },
-        { role: "user", content: messageInput },
-        { role: "assistant", content: data.result },
-        { role: "user", content: messageInput },
-        { role: "assistant", content: data.result },
-        { role: "user", content: messageInput },
-        { role: "assistant", content: data.result },
-        { role: "user", content: messageInput },
-        { role: "assistant", content: data.result },
-        { role: "user", content: messageInput },
-        { role: "assistant", content: data.result },
-        { role: "user", content: messageInput },
-        { role: "assistant", content: data.result },
-        { role: "user", content: messageInput },
-        { role: "assistant", content: data.result },
-        { role: "user", content: messageInput },
-        { role: "assistant", content: data.result },
-        { role: "user", content: messageInput },
-        { role: "assistant", content: data.result },
-        { role: "user", content: messageInput },
-        { role: "assistant", content: data.result },
-        { role: "user", content: messageInput },
-        { role: "assistant", content: data.result },
-        { role: "user", content: messageInput },
-        { role: "assistant", content: data.result },
-        { role: "user", content: messageInput },
-        { role: "assistant", content: data.result },
-        { role: "user", content: messageInput },
-        { role: "assistant", content: data.result },
-        { role: "user", content: messageInput },
-        { role: "assistant", content: data.result },
       ]);
       setMessageInput("");
     } catch (error) {
@@ -84,6 +54,8 @@ export default function Home() {
       <style jsx global>{`
         body {
           margin: 0;
+          width: 100%;
+          height: 100%;
         }
       `}</style>
 
