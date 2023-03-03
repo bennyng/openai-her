@@ -77,7 +77,7 @@
   background: rgb(255 255 255 / 50%);
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
-  margin-top: 50%;
+  margin-top: 40vh;
 }
 
 .main form {
