@@ -40,6 +40,36 @@ export default function Home() {
         ...result,
         { role: "user", content: messageInput },
         { role: "assistant", content: data.result },
+        { role: "user", content: messageInput },
+        { role: "assistant", content: data.result },
+        { role: "user", content: messageInput },
+        { role: "assistant", content: data.result },
+        { role: "user", content: messageInput },
+        { role: "assistant", content: data.result },
+        { role: "user", content: messageInput },
+        { role: "assistant", content: data.result },
+        { role: "user", content: messageInput },
+        { role: "assistant", content: data.result },
+        { role: "user", content: messageInput },
+        { role: "assistant", content: data.result },
+        { role: "user", content: messageInput },
+        { role: "assistant", content: data.result },
+        { role: "user", content: messageInput },
+        { role: "assistant", content: data.result },
+        { role: "user", content: messageInput },
+        { role: "assistant", content: data.result },
+        { role: "user", content: messageInput },
+        { role: "assistant", content: data.result },
+        { role: "user", content: messageInput },
+        { role: "assistant", content: data.result },
+        { role: "user", content: messageInput },
+        { role: "assistant", content: data.result },
+        { role: "user", content: messageInput },
+        { role: "assistant", content: data.result },
+        { role: "user", content: messageInput },
+        { role: "assistant", content: data.result },
+        { role: "user", content: messageInput },
+        { role: "assistant", content: data.result },
       ]);
       setMessageInput("");
     } catch (error) {
@@ -87,7 +117,7 @@ export default function Home() {
             value={messageInput}
             onChange={(e) => setMessageInput(e.target.value)}
           />
-          <input type="submit" value="Send" />
+          <input type="submit" value="📩" />
         </form>
       </main>
     </div>
