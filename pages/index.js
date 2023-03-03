@@ -50,9 +50,11 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <>
       <style jsx global>{`
-        body {
+        html,
+        body,
+        div#__next {
           margin: 0;
           width: 100%;
           height: 100%;
@@ -66,19 +68,21 @@ export default function Home() {
 
       <main className={styles.main}>
         {/* <img src="/dog.png" className={styles.icon} /> */}
-        <div className={styles.header}>Her</div>
+        {/* <div className={styles.header}>Her</div> */}
 
         <div className={styles.result}>
-          {result.map((message, index) => {
-            return (
-              <div
-                key={index}
-                className={styles[message.role]}
-                dangerouslySetInnerHTML={{ __html: message.content }}
-              />
-            );
-          })}
+          {result.length > 0 &&
+            result.map((message, index) => {
+              return (
+                <div
+                  key={index}
+                  className={styles[message.role]}
+                  dangerouslySetInnerHTML={{ __html: message.content }}
+                />
+              );
+            })}
           <div ref={messagesEndRef} />
+          {result.length === 0 && <div className={styles.empty}>Her.</div>}
         </div>
 
         <form onSubmit={onSubmit}>
@@ -92,6 +96,6 @@ export default function Home() {
           <input type="submit" value="📩" />
         </form>
       </main>
-    </div>
+    </>
   );
 }

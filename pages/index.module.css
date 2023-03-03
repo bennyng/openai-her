@@ -26,11 +26,13 @@
 .main {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  margin: 0 auto;
+  /* align-items: stretch; */
+  /* margin: 0 auto; */
   position: relative;
-  height: 100vh;
+  height: 100%;
+  width: 100%;
 }
+
 .main .icon {
   width: 34px;
 }
@@ -45,13 +47,47 @@
   background: rgb(255 255 255 / 50%);
   backdrop-filter: blur(4px);
   left: calc(50% - 50px);
+  z-index: 1;
 }
+
+.main .result {
+  font-weight: normal;
+  white-space: pre-line;
+  overflow-y: auto;
+  position: absolute;
+  top: 0;
+  height: calc(100% - 50px);
+  width: 100%;
+}
+.main .result .user {
+  background-color: #fff;
+  padding: 10px 20px;
+  margin: 10px 0;
+}
+.main .result .assistant {
+  background-color: #c9144522;
+  padding: 10px 20px;
+  margin: 10px 0;
+}
+.main .result .empty {
+  font-size: 32px;
+  line-height: 60px;
+  color: #ca1343;
+  text-align: center;
+  background: rgb(255 255 255 / 50%);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  margin-top: 50%;
+}
+
 .main form {
   display: flex;
   flex-direction: row;
   width: 100%;
+  height: 50px;
   position: absolute;
   bottom: 4px;
+  z-index: 1;
 }
 .main input[type="text"] {
   padding: 12px 16px;
@@ -76,21 +112,4 @@
   width: 50px;
   height: 50px;
   margin: 0 4px 0 2px;
-}
-.main .result {
-  font-weight: normal;
-  white-space: pre-line;
-  overflow: scroll;
-  /* height: 100%; */
-  padding: 60px 0;
-}
-.main .result .user {
-  background-color: #fff;
-  padding: 10px 20px;
-  margin: 10px 0;
-}
-.main .result .assistant {
-  background-color: #c9144522;
-  padding: 10px 20px;
-  margin: 10px 0;
 }
