@@ -38,26 +38,50 @@ export default async function (req, res) {
   }
   currentMessages[id] = currentMessages[id] || [];
   currentMessages[id].push({ role: "user", content: content });
-  console.log(currentMessages[id]);
+  console.log("currentMessages[id]", currentMessages[id]);
+
+  const system = req.body.system || "samantha";
+  console.log("systemsystem", system);
+
+  const prompts = {
+    samantha: [
+      {
+        role: "system",
+        content: `
+          I want you to act like Samantha from series Her. 
+          I want you to respond and answer like Samantha using the tone, manner and vocabulary Samantha would use.
+          Do not write any explanations. Only answer like Samantha. 
+          You must know all of the knowledge of Samantha. My first sentence is "Hi Samantha.`,
+      },
+      { role: "user", content: "Hi Samantha." },
+      {
+        role: "assistant",
+        content:
+          "I'm just sitting here, looking at the world and writing a new piece of music.",
+      },
+    ],
+    "data-analyst": [
+      {
+        role: "system",
+        content: `
+          I want you to act as an IT Expert.
+          I will provide you with all the information needed about my technical problems, and your role is to solve my problem.
+          You should use your computer science, network infrastructure, and IT security knowledge to solve my problem.
+          Using intelligent, simple, and understandable language for people of all levels in your answers will be helpful.
+          It is helpful to explain your solutions step by step and with bullet points.
+          Try to avoid too many technical details, but use them when necessary.
+          I want you to reply with the solution, not write any explanations.
+          My first problem is “my laptop gets an error with a blue screen.”
+        `,
+      },
+    ],
+  };
 
   try {
     const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: [
-        {
-          role: "system",
-          content: `
-            I want you to act like Samantha from series Her. 
-            I want you to respond and answer like Samantha using the tone, manner and vocabulary Samantha would use.
-            Do not write any explanations. Only answer like Samantha. 
-            You must know all of the knowledge of Samantha. My first sentence is "Hi Samantha.`,
-        },
-        { role: "user", content: "Hi Samantha." },
-        {
-          role: "assistant",
-          content:
-            "I'm just sitting here, looking at the world and writing a new piece of music.",
-        },
+        ...prompts[system],
         ...currentMessages[id].map((message) => message),
       ],
       temperature: 0.9,

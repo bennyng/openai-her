@@ -113,3 +113,15 @@
   height: 50px;
   margin: 0 4px 0 2px;
 }
+
+.main .dropdown {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  z-index: 100;
+}
+
+.main .dropdown .select {
+  font-size: 16px;
+  padding: 10px;
+}

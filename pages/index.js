@@ -8,6 +8,7 @@ export default function Home() {
   const messagesEndRef = useRef(null);
   const [messageInput, setMessageInput] = useState("");
   const [result, setResult] = useState([]);
+  const [system, setSystem] = useState("samatha");
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -25,7 +26,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id, content: messageInput }),
+        body: JSON.stringify({ id, content: messageInput, system: system }),
       });
 
       const data = await response.json();
@@ -49,6 +50,21 @@ export default function Home() {
     }
   }
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedSystem = localStorage.getItem("system");
+      console.debug("savedSystem", savedSystem);
+      savedSystem && setSystem(savedSystem);
+    }
+  }, []);
+
+  const changeSystem = (sys) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("system", sys);
+      location.reload();
+    }
+  };
+
   return (
     <>
       <style jsx global>{`
@@ -69,6 +85,22 @@ export default function Home() {
       <main className={styles.main}>
         {/* <img src="/dog.png" className={styles.icon} /> */}
         {/* <div className={styles.header}>Her</div> */}
+        {/* <Select options={options} /> */}
+
+        <div className={styles.dropdown}>
+          <select
+            className={styles.select}
+            value={system}
+            onChange={(item) => {
+              changeSystem(item.target.value);
+            }}
+            name="system"
+            id="system"
+          >
+            <option value="samantha">Samantha</option>
+            <option value="data-analyst">Data Analyst</option>
+          </select>
+        </div>
 
         <div className={styles.result}>
           {result.length > 0 &&
