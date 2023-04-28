@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useState, useRef, useEffect } from "react";
 import styles from "./index.module.css";
+import TextareaAutosize from "react-textarea-autosize";
 
 const id = btoa(Math.random().toString()).substring(10, 15);
 
@@ -18,8 +19,7 @@ export default function Home() {
     scrollToBottom();
   }, [result]);
 
-  async function onSubmit(event) {
-    event.preventDefault();
+  async function onSubmit() {
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
@@ -62,6 +62,13 @@ export default function Home() {
     if (typeof window !== "undefined") {
       localStorage.setItem("system", sys);
       location.reload();
+    }
+  };
+
+  const onEnterPress = (e) => {
+    if (e.keyCode == 13 && e.shiftKey == false) {
+      e.preventDefault();
+      onSubmit();
     }
   };
 
@@ -118,14 +125,16 @@ export default function Home() {
         </div>
 
         <form onSubmit={onSubmit}>
-          <input
-            type="text"
-            name="message"
-            placeholder="Type your message here"
-            value={messageInput}
-            onChange={(e) => setMessageInput(e.target.value)}
-          />
-          <input type="submit" value="📩" />
+          <div className={styles.messageInput}>
+            <TextareaAutosize
+              minRows={1}
+              maxRows={6}
+              className={styles.textarea}
+              onChange={(e) => setMessageInput(e.target.value)}
+              onKeyDown={(e) => onEnterPress(e)}
+            />
+            <input type="submit" value="📩" />
+          </div>
         </form>
       </main>
     </>
