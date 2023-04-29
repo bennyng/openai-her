@@ -28,12 +28,13 @@ export default function Home() {
   }
 
   async function sendMessage() {
+    const messageInputToSent = messageInput;
+
     try {
       if (isLoading) {
         return;
       }
 
-      const messageInputToSent = messageInput;
       setIsLoading(true);
       setMessageInput("");
 
@@ -64,6 +65,7 @@ export default function Home() {
       ]);
       setIsLoading(false);
     } catch (error) {
+      setMessageInput(messageInputToSent);
       setIsLoading(false);
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -155,6 +157,7 @@ export default function Home() {
               value={messageInput}
               onChange={(e) => setMessageInput(e.target.value)}
               onKeyDown={(e) => onEnterPress(e)}
+              disabled={isLoading}
             />
             <input type="submit" value="📩" />
             {isLoading && (
