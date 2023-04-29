@@ -4,12 +4,14 @@ import styles from "./index.module.css";
 import TextareaAutosize from "react-textarea-autosize";
 
 const id = btoa(Math.random().toString()).substring(10, 15);
+const defaultSystem = "samatha";
 
 export default function Home() {
   const messagesEndRef = useRef(null);
   const [messageInput, setMessageInput] = useState("");
   const [result, setResult] = useState([]);
-  const [system, setSystem] = useState("samatha");
+  const [system, setSystem] = useState(defaultSystem);
+  const [isLoading, setIsLoading] = useState(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -19,14 +21,31 @@ export default function Home() {
     scrollToBottom();
   }, [result]);
 
-  async function onSubmit() {
+  async function onSubmit(event) {
+    event.preventDefault();
+    sendMessage();
+  }
+
+  async function sendMessage() {
     try {
+      if (isLoading) {
+        return;
+      }
+
+      const messageInputToSent = messageInput;
+      setIsLoading(true);
+      setMessageInput("");
+
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id, content: messageInput, system: system }),
+        body: JSON.stringify({
+          id,
+          content: messageInputToSent,
+          system: system,
+        }),
       });
 
       const data = await response.json();
@@ -39,11 +58,12 @@ export default function Home() {
 
       setResult([
         ...result,
-        { role: "user", content: messageInput },
+        { role: "user", content: messageInputToSent },
         { role: "assistant", content: data.result },
       ]);
-      setMessageInput("");
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       // Consider implementing your own error handling logic here
       console.error(error);
       alert(error.message);
@@ -68,7 +88,7 @@ export default function Home() {
   const onEnterPress = (e) => {
     if (e.keyCode == 13 && e.shiftKey == false) {
       e.preventDefault();
-      onSubmit();
+      sendMessage();
     }
   };
 
@@ -130,10 +150,15 @@ export default function Home() {
               minRows={1}
               maxRows={6}
               className={styles.textarea}
+              placeholder="Type your message here"
+              value={messageInput}
               onChange={(e) => setMessageInput(e.target.value)}
               onKeyDown={(e) => onEnterPress(e)}
             />
             <input type="submit" value="📩" />
+            {isLoading && (
+              <div className={styles.messageSending}>Waiting...</div>
+            )}
           </div>
         </form>
       </main>

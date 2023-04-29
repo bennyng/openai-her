@@ -113,9 +113,9 @@
   width: 50px;
   height: 50px;
   margin: 0 4px 0 2px;
-  right: 8px;
+  right: 6px;
   position: absolute;
-  bottom: 12px;
+  bottom: 4px;
 }
 
 .main .dropdown {
@@ -132,11 +132,26 @@
 .main .textarea {
   width: 100%;
   border: 1px solid #ccc;
-  padding: 22px 70px 22px 12px;
+  padding: 20px 70px 20px 12px;
   font-size: 16px;
   box-sizing: border-box;
 }
 
 .main .messageInput {
   width: 100%;
+  display: flex;
+}
+
+.main .messageSending {
+  background: rgb(250 226 231 / 72%);
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
 }
