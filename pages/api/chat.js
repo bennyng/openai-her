@@ -7,6 +7,9 @@ const openai = new OpenAIApi(configuration);
 
 const currentMessages = {};
 
+export const SYSTEM_SAMANTHA = "samnantha";
+export const SYSTEM_DATA_ANALYST = "data-analyst";
+
 export default async function (req, res) {
   if (!configuration.apiKey) {
     res.status(500).json({
@@ -40,7 +43,7 @@ export default async function (req, res) {
   currentMessages[id].push({ role: "user", content: content });
   console.log("currentMessages[id]", currentMessages[id]);
 
-  const system = req.body.system || "samantha";
+  const system = req.body.system || SYSTEM_SAMANTHA;
   console.log("systemsystem", system);
 
   const prompts = {

@@ -2,9 +2,10 @@ import Head from "next/head";
 import { useState, useRef, useEffect } from "react";
 import styles from "./index.module.css";
 import TextareaAutosize from "react-textarea-autosize";
+import { SYSTEM_SAMANTHA } from "./api/chat";
 
 const id = btoa(Math.random().toString()).substring(10, 15);
-const defaultSystem = "samatha";
+const defaultSystem = SYSTEM_SAMANTHA;
 
 export default function Home() {
   const messagesEndRef = useRef(null);
